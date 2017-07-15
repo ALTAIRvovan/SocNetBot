@@ -6,24 +6,18 @@ import (
 	vk_obj "github.com/dasrmipt/go-vk-api/obj"
 )
 
-type BaseMessage struct {
-
-}
-
 type InMessage struct {
-	BaseMessage
 	pipline.InMessage
-	cmd pipline.Command
+	cmd pipline.CmdInMessage
 	msg *vk_api.LPMessage
 }
 
 type OutMessage struct {
 	pipline.OutMessage
-	BaseMessage
 	Message *vk_obj.MessageToSend
 }
 
-func (request *InMessage) GetCmd() pipline.Command {
+func (request *InMessage) GetCmd() pipline.CmdInMessage {
 	return request.cmd
 }
 

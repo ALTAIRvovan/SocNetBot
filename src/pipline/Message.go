@@ -7,8 +7,14 @@ type Typed interface {
 type InMessage interface {
 	Typed
 	MakeResponse() OutMessage
-	GetCmd() Command
+	GetCmd() CmdInMessage
 	GetContentText() string
+	GetParams() []string
+}
+
+type CmdInMessage struct {
+	Cmd Command
+	Params []string
 }
 
 type OutMessage interface {

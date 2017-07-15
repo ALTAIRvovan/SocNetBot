@@ -6,6 +6,7 @@ import (
 	vk_obj "github.com/dasrmipt/go-vk-api/obj"
 	"social/vk"
 	"fmt"
+	"strings"
 )
 
 type MakePostCommand struct {
@@ -23,10 +24,15 @@ func (cmd *MakePostCommand) Init(provider *pipline.DependenceProvider) {
 }
 
 func (cmd *MakePostCommand) Execute(message pipline.InMessage, response pipline.Response) {
-	text := message.GetContentText()
+	out_msg := message.MakeResponse()
+	text := strings.TrimSpace(message.GetContentText())
+	if text == "" {
+		out_msg.SetText("There is not any text of post.")
+		response.SendMessage(out_msg)
+		return
+	}
 	card := trello.Card{IDList: "5967baf92b64b3206c97d545", Name: text, Desc: text}
 	err := cmd.trello_api.CreateCard(&card, trello.Defaults())
-	out_msg := message.MakeResponse()
 	if err == nil {
 		out_msg.SetText("Card has been added " + card.ID)
 		msgToAdmins := vk_obj.MessageToSend{

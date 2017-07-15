@@ -4,6 +4,8 @@ import (
 	vk_api "github.com/dasrmipt/go-vk-api"
 	"strings"
 	"pipline"
+	"github.com/urShadow/go-vk-api"
+	"html"
 )
 
 type VK struct {
@@ -33,14 +35,23 @@ func (api *VK) Run() {
 }
 
 func (api *VK) handleMessages(msg *vk_api.LPMessage) {
-	text := msg.Text
-	if com, err := api.commandProvider.GetCommand(
-		func(name string) bool {
-			return strings.HasPrefix(text, name)
-		}); err == nil {
-		*api.outQueue <- &InMessage{
-			cmd: com,
-			msg: msg,
+	if msg.Flags&vk.FlagMessageOutBox == 0 {
+		msg.Text = html.UnescapeString(msg.Text)
+		msg.Text = strings.Replace(msg.Text, "<br>", "\n", -1)
+		lines := strings.SplitN(msg.Text, "\n", 2)
+		if len(lines) > 1 {
+			msg.Text = lines[1]
+		} else {
+			msg.Text = ""
+		}
+		if com, err := api.commandProvider.GetCommand(
+			func(name string) bool {
+				return strings.HasPrefix(lines[0], name)
+			}); err == nil {
+			*api.outQueue <- &InMessage{
+				cmd: pipline.CmdInMessage{Cmd:com, Params: strings.Split(lines[0], " ")},
+				msg: msg,
+			}
 		}
 	}
 }

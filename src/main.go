@@ -10,6 +10,7 @@ import (
 
 func initCommands(provider *pipline.CommandProvider) {
 	provider.AddCommand("/hello", &command.HelloCommand{})
+	provider.AddCommand("/echo_params", &command.EchoParamsCommand{})
 	provider.AddCommand("/make_post", &command.MakePostCommand{})
 	provider.AddCommand("/get_joke", &command.GetJokeCommand{})
 }

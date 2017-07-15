@@ -8,7 +8,7 @@ type Executor struct {
 func (ececutor *Executor) Run() {
 	var response = &ResponseImpl{OutQueue: ececutor.ResponseQueue}
 	for request := range ececutor.RequestQueue {
-		command := request.GetCmd()
+		command := request.GetCmd().Cmd
 		command.Execute(request, response)
 	}
 }
