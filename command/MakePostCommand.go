@@ -1,10 +1,10 @@
 package command
 
 import (
-	"pipline"
+	"github.com/ALTAIRvovan/SocNetBot/pipline"
 	"github.com/dasrmipt/trello"
 	vk_obj "github.com/dasrmipt/go-vk-api/obj"
-	"social/vk"
+	"github.com/ALTAIRvovan/SocNetBot/social/vk"
 	"fmt"
 	"strings"
 )
@@ -37,7 +37,12 @@ func (cmd *MakePostCommand) Execute(message pipline.InMessage, response pipline.
 		out_msg.SetText("Card has been added " + card.ID)
 		msgToAdmins := vk_obj.MessageToSend{
 			PeerId: 121 + 2000000000,
-			Message: fmt.Sprintf("You must make post.\nCardID: %s\n%s", card.ID, text),
+		}
+		if vkMsg, ok := message.(*vk.InMessage); ok {
+			msgToAdmins.Message = fmt.Sprintf("You must make post.\nCardID: %s", card.ID)
+			msgToAdmins.FwdMessages = []int64{vkMsg.Msg.ID}
+		} else {
+			msgToAdmins.Message = fmt.Sprintf("You must make post.\nCardID: %s\n Text:\n%s", card.ID, text)
 		}
 		response.SendMessage(&vk.OutMessage{Message: &msgToAdmins})
 	} else {

@@ -1,4 +1,5 @@
 .idea/
 vendor/
 pkg/
+builds/
 config.json

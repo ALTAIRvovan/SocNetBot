@@ -1,6 +1,6 @@
 package command
 
-import "pipline"
+import "github.com/ALTAIRvovan/SocNetBot/pipline"
 
 type HelloCommand struct {
 	pipline.Command

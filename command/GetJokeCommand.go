@@ -2,7 +2,7 @@ package command
 
 import (
 	"github.com/dnaeon/go-chucknorris/api"
-	"pipline"
+	"github.com/ALTAIRvovan/SocNetBot/pipline"
 )
 
 type GetJokeCommand struct {

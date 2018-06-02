@@ -1,6 +1,6 @@
 package vk
 
-import "pipline"
+import "github.com/ALTAIRvovan/SocNetBot/pipline"
 
 type Request struct{
 	pipline.Request

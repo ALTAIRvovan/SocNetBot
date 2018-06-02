@@ -1,7 +1,7 @@
 package vk
 
 import (
-	"pipline"
+	"github.com/ALTAIRvovan/SocNetBot/pipline"
 	vk_api "github.com/dasrmipt/go-vk-api"
 	vk_obj "github.com/dasrmipt/go-vk-api/obj"
 )
@@ -9,7 +9,7 @@ import (
 type InMessage struct {
 	pipline.InMessage
 	cmd pipline.CmdInMessage
-	msg *vk_api.LPMessage
+	Msg *vk_api.LPMessage
 }
 
 type OutMessage struct {
@@ -27,13 +27,13 @@ func (msg *OutMessage) GetType() string {
 
 func (msg *InMessage) MakeResponse() pipline.OutMessage {
 	message := new(vk_obj.MessageToSend)
-	message.PeerId = msg.msg.FromID
-	message.FwdMessages = []int64{msg.msg.ID}
+	message.PeerId = msg.Msg.FromID
+	message.FwdMessages = []int64{msg.Msg.ID}
 	return &OutMessage{Message: message}
 }
 
 func (msg *InMessage) GetContentText() string {
-	return msg.msg.Text
+	return msg.Msg.Text
 }
 
 func (msg *OutMessage) SetText(text string) {

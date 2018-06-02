@@ -9,7 +9,7 @@ type InMessage interface {
 	MakeResponse() OutMessage
 	GetCmd() CmdInMessage
 	GetContentText() string
-	GetParams() []string
+	//GetParams() []string
 }
 
 type CmdInMessage struct {

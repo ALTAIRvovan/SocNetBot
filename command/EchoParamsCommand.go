@@ -1,7 +1,7 @@
 package command
 
 import (
-	"pipline"
+	"github.com/ALTAIRvovan/SocNetBot/pipline"
 	"fmt"
 )
 
